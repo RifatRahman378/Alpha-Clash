@@ -12,10 +12,15 @@ function show(elementId){
     const element = document.getElementById(elementId);
     element.classList.remove('hidden');
 }
+function backgroundColor(elementId){
+   const element = document.getElementById(elementId) 
+   element.classList.add('bg-orange-400');
+}
 function gameLoop(){
     const alphabet = randomAlphabet();
     const element = document.getElementById('current-alphabet');
     element.innerText = alphabet;
+    backgroundColor(alphabet)
 }
 function randomAlphabet(){
     const alphabetString = 'abcdefghijklmnopqrstuvwxyz'
