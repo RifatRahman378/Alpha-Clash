@@ -1,7 +1,10 @@
 // Function to start the game
 function playNow() {
     hide('home'); // Hide the home screen
+    hide('score-board')
     show('play-ground'); // Show the play ground
+    setTextElementById('lifespan', 5)
+    setTextElementById('current-score', 0)
     gameLoop(); // Start the game loop
 }
 
@@ -45,10 +48,11 @@ function backgroundColor(elementId) {
 }
 
 // Function to remove background color from an element
-function removeBackgroudColor(elementId) {
+function removeBackgroundColor(elementId) {
     const element = document.getElementById(elementId);
-    element.classList.remove('bg-orange-400');
     element.classList.remove('bg-red-500');
+    element.classList.remove('bg-orange-400');
+
 }
 
 // Function to update the score
@@ -58,13 +62,37 @@ function scoreUpdate() {
     const currentScore = parseInt(text);
     const newScore = currentScore + 1;
     element.innerText = newScore;
+    return newScore
 }
-function lifeUpdate(){
-    const element = document.getElementById('lifespan');
-    const text = element.innerText;
+function lifeUpdate() {
+    const text = getTextElementById('lifespan')
     const currentScore = parseInt(text);
     const newScore = currentScore - 1;
-    element.innerText = newScore;
+    setTextElementById('lifespan', newScore);
+    if (newScore === 0) {
+        gameOver()
+    }
+
+}
+function getTextElementById(elementId) {
+    const element = document.getElementById(elementId);
+    const text = element.innerText;
+    return text
+}
+function setTextElementById(elementId, value) {
+    const element = document.getElementById(elementId);
+    element.innerText = value;
+
+}
+function gameOver() {
+    hide('play-ground');
+    show('score-board');
+    const score = getTextElementById('current-score');
+    console.log(score);
+    setTextElementById('final-score', score);
+    const currentAlphabet = getTextElementById('current-alphabet');
+    console.log(currentAlphabet);
+    removeBackgroundColor(currentAlphabet);
 }
 // Function for the main game loop
 function gameLoop() {
