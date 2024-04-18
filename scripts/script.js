@@ -1,28 +1,34 @@
+
 function playNow() {
     hide('home');
     show('play-ground');
     gameLoop();
 }
 function keyboardCapture(event) {
-    const pressed = event.key;
-    const alphabet = document.getElementById('current-alphabet').innerText;
-    const currentAlphabet = alphabet.toLowerCase(); 
-    console.log('Current Alphabet:', currentAlphabet);
+    const pressed = event.key.toLowerCase(); // Convert pressed key to lowercase for consistency
+    const currentAlphabetId = document.getElementById('current-alphabet').innerText.toLowerCase(); // Convert current alphabet to lowercase for consistency
+    console.log('Current Alphabet:', currentAlphabetId);
     console.log('Button pressed:', pressed);
-    if (currentAlphabet === pressed) {
-        console.log('right button pressed');
-        removeBackgroudColor(currentAlphabet);
+
+    // const currentAlphabetElement = document.getElementById(currentAlphabetId);
+
+    if (currentAlphabetId === pressed) {
+        // If correct key is pressed
         gameLoop();
-        scoreUpdate()
+        scoreUpdate();
+        removeBackgroudColor(currentAlphabetId)
+    } else {
+        // If wrong key is pressed
+        // removeBackgroudColor(currentAlphabetId); // Add red background color to the current alphabet
+        const element = document.getElementById(currentAlphabetId)
+        element.classList.add('bg-red-500');
     }
-    else{
-        console.log('wrong button pressed');
-    }
-    
 }
-function scoreUpdate(){
+
+
+function scoreUpdate() {
     const element = document.getElementById('current-score').innerText;
-    
+
     console.log(parseInt(element));
 }
 document.addEventListener('keyup', keyboardCapture);
@@ -40,15 +46,16 @@ function gameLoop() {
     const element = document.getElementById('current-alphabet');
     element.innerText = alphabet;
     backgroundColor(alphabet);
-    
+
 }
 function backgroundColor(elementId) {
     const element = document.getElementById(elementId)
     element.classList.add('bg-orange-400');
 }
-function removeBackgroudColor(elementId){
+function removeBackgroudColor(elementId) {
     const element = document.getElementById(elementId)
     element.classList.remove('bg-orange-400');
+    element.classList.remove('bg-red-500');
 }
 function randomAlphabet() {
     const alphabetString = 'abcdefghijklmnopqrstuvwxyz'
