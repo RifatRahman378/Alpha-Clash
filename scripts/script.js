@@ -13,13 +13,18 @@ function keyboardCapture(event) {
         console.log('right button pressed');
         removeBackgroudColor(currentAlphabet);
         gameLoop();
+        scoreUpdate()
     }
     else{
         console.log('wrong button pressed');
     }
     
 }
-
+function scoreUpdate(){
+    const element = document.getElementById('current-score').innerText;
+    
+    console.log(parseInt(element));
+}
 document.addEventListener('keyup', keyboardCapture);
 function hide(elementId) {
     const element = document.getElementById(elementId);
@@ -29,6 +34,14 @@ function show(elementId) {
     const element = document.getElementById(elementId);
     element.classList.remove('hidden');
 }
+
+function gameLoop() {
+    const alphabet = randomAlphabet();
+    const element = document.getElementById('current-alphabet');
+    element.innerText = alphabet;
+    backgroundColor(alphabet);
+    
+}
 function backgroundColor(elementId) {
     const element = document.getElementById(elementId)
     element.classList.add('bg-orange-400');
@@ -36,13 +49,6 @@ function backgroundColor(elementId) {
 function removeBackgroudColor(elementId){
     const element = document.getElementById(elementId)
     element.classList.remove('bg-orange-400');
-}
-function gameLoop() {
-    const alphabet = randomAlphabet();
-    const element = document.getElementById('current-alphabet');
-    element.innerText = alphabet;
-    backgroundColor(alphabet);
-    
 }
 function randomAlphabet() {
     const alphabetString = 'abcdefghijklmnopqrstuvwxyz'
