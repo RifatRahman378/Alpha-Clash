@@ -1,10 +1,10 @@
 // Function to start the game
 function playNow() {
     hide('home'); // Hide the home screen
-    hide('score-board')
+    hide('score-board');
     show('play-ground'); // Show the play ground
-    setTextElementById('lifespan', 5)
-    setTextElementById('current-score', 0)
+    setTextElementById('lifespan', 5);
+    setTextElementById('current-score', 0);
     gameLoop(); // Start the game loop
 }
 
@@ -30,14 +30,14 @@ function keyboardCapture(event) {
 
     if (currentAlphabetId === pressed) {
         // If correct key is pressed
-        gameLoop(); // Start the game loop again
         scoreUpdate(); // Update the score
-        removeBackgroudColor(currentAlphabetId); // Remove background color
+        removeBackgroundColor(currentAlphabetId); // Remove background color
+        gameLoop(); // Start the game loop again
     } else {
         // If wrong key is pressed
         const element = document.getElementById(currentAlphabetId);
         element.classList.add('bg-red-500'); // Add red background color to the current alphabet
-        lifeUpdate()
+        lifeUpdate();
     }
 }
 
@@ -52,7 +52,6 @@ function removeBackgroundColor(elementId) {
     const element = document.getElementById(elementId);
     element.classList.remove('bg-red-500');
     element.classList.remove('bg-orange-400');
-
 }
 
 // Function to update the score
@@ -62,38 +61,43 @@ function scoreUpdate() {
     const currentScore = parseInt(text);
     const newScore = currentScore + 1;
     element.innerText = newScore;
-    return newScore
+    return newScore;
 }
-function lifeUpdate() {
-    const text = getTextElementById('lifespan')
-    const currentScore = parseInt(text);
-    const newScore = currentScore - 1;
-    setTextElementById('lifespan', newScore);
-    if (newScore === 0) {
-        gameOver()
-    }
 
+// Function to update the life
+function lifeUpdate() {
+    const text = getTextElementById('lifespan');
+    const currentLife = parseInt(text);
+    const newLife = currentLife - 1;
+    setTextElementById('lifespan', newLife);
+    if (newLife === 0) {
+        gameOver();
+    }
 }
+
+// Function to get text content of an element by its ID
 function getTextElementById(elementId) {
     const element = document.getElementById(elementId);
     const text = element.innerText;
-    return text
+    return text;
 }
+
+// Function to set text content of an element by its ID
 function setTextElementById(elementId, value) {
     const element = document.getElementById(elementId);
     element.innerText = value;
-
 }
+
+// Function to handle game over
 function gameOver() {
     hide('play-ground');
     show('score-board');
     const score = getTextElementById('current-score');
-    console.log(score);
     setTextElementById('final-score', score);
     const currentAlphabet = getTextElementById('current-alphabet');
-    console.log(currentAlphabet);
     removeBackgroundColor(currentAlphabet);
 }
+
 // Function for the main game loop
 function gameLoop() {
     const alphabet = randomAlphabet(); // Generate a random alphabet
@@ -111,3 +115,5 @@ function randomAlphabet() {
     const alphabet = alphabets[number];
     return alphabet;
 }
+
+
